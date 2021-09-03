@@ -35,7 +35,7 @@ class RegistrationController extends Controller
             $user = User::create([
                 'name' => $request['name'],
                 'surname' => $request['surname'],
-                'password' => Hash::make($request['password']),
+                'password' => Hash::make($request['password'].'salt'),
                 'email' => $request['email']
             ]);
 

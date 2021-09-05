@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Http\Request;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Http\Request;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @method static create(Request $request)
  * @method static find($id)
+ * @method static where(string $string, mixed $email)
+ * @property mixed $id
+ * @property mixed $password
  */
 class User extends Authenticatable
 {

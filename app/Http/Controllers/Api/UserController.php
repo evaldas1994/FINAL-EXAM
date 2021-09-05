@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\JsonResponse;
@@ -13,6 +14,11 @@ use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +28,9 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        if (count($users) > 0) {
+        $userService = new UserService();
+
+        if ($userService->is_records_exists($users)) {
             return response()->json([
                 'success' => true,
                 'message' => 'users get successfully',
@@ -46,7 +54,9 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        if ($user !== null) {
+        $userService = new UserService();
+
+        if ($userService->is_record_exists($user)) {
             return response()->json([
                 'success' => true,
                 'message' => 'user found successfully',
@@ -71,41 +81,12 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        $v = Validator::make($request->all(), [
-            'name' => 'required|max:50',
-            'surname' => 'required|max:50',
-            'password' => [
-                Password::min(4)
-            ],
-            'email' => 'required', Rule::unique('users')->ignore($user->id)
-        ]);
+        $userService = new UserService();
 
-        if ($v->fails())
-        {
-            return response()->json([
-                'success' => false,
-                'message' => $v->errors()->first()
-            ]);
+        if ($userService->is_record_exists($user)) {
+            return response()->json($userService->update_validation($request, $user));
         } else {
-
-            if ($request['password'] === '') {
-                $request['password'] = $user->password;
-            } else {
-                $request['password'] = Hash::make($request['password'].'salt');
-            }
-
-            $user->update([
-                'name' => $request['name'],
-                'surname' => $request['surname'],
-                'password' => $request['password'],
-                'email' => $request['email']
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'user updated successfully',
-                'data' => $user
-            ]);
+            return response()->json(['success' => false, 'message' => 'user not found']);
         }
     }
 
@@ -119,7 +100,9 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        if ($user !== null) {
+        $userService = new UserService();
+
+        if ($userService->is_record_exists($user)) {
             $user->delete();
 
             return response()->json([

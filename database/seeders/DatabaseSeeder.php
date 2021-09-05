@@ -20,6 +20,5 @@ class DatabaseSeeder extends Seeder
             'password' => '00555',
             'email' => 'Evaldas.tuleikis@gmail.com'
         ]);
-//         User::factory(10)->create();
     }
 }

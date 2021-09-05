@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\Services\UserService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\Request;
 use Tests\TestCase;
+use App\Services\UserService;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
  * @method seeInDatabase(string $string, string[] $array)

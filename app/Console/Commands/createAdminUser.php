@@ -113,7 +113,8 @@ class createAdminUser extends Command
                 'name' => $name,
                 'surname' => $surname,
                 'password' => Hash::make($password.'salt'),
-                'email' => $email
+                'email' => $email,
+                'is_admin' => true
             ]);
 
             $this->info('Admin created successfully!');

@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
-use App\Services\UserService;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\UserResource;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -26,7 +23,7 @@ class UserController extends Controller
      */
     public function index(): JsonResponse
     {
-        $users = User::all();
+        $users = UserResource::collection(User::all());
 
         $userService = new UserService();
 
@@ -52,7 +49,7 @@ class UserController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        $user = User::find($id);
+        $user =  new UserResource(User::find($id));
 
         $userService = new UserService();
 

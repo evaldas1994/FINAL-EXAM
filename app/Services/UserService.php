@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
@@ -82,7 +83,7 @@ class UserService
                     'email' => $request['email']
                 ]);
 
-                return ['success' => true, 'message' => 'user updated successfully', 'data' => $user];
+                return ['success' => true, 'message' => 'user updated successfully', 'data' => new UserResource($user)];
 
             } catch (Throwable $exception) {
                 return ['success' => false, 'message' => $exception->getMessage()];

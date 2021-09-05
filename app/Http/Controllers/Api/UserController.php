@@ -11,11 +11,6 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -53,7 +48,7 @@ class UserController extends Controller
 
         $userService = new UserService();
 
-        if ($userService->is_record_exists($user)) {
+        if ($userService->is_record_exists($user->resource)) {;
             return response()->json([
                 'success' => true,
                 'message' => 'user found successfully',

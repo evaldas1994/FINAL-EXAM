@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static where(string $string, mixed $email)
  * @property mixed $id
  * @property mixed $password
+ * @property mixed $is_admin
  */
 class User extends Authenticatable
 {

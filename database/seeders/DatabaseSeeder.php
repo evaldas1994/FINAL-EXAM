@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Lake;
 use App\Models\User;
 use App\Models\Region;
 use Illuminate\Database\Seeder;
@@ -24,5 +25,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Region::factory(10)->create();
+        Lake::factory(20)->create();
     }
 }

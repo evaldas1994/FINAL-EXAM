@@ -55,3 +55,10 @@ API Specification
 
         -DELETE api/user/{id} (api/UserController/delete)
             response: (json) [success(bool), message(varchar(255))]
+
+    RegionController
+        -GET api/region (api/RegionController@index)
+            response: (json) [success(bool), message(varchar(255)), (IF SUCCESS === TRUE) -> data(array of regions objects)]
+
+        -GET api/region/{id} (api/RegionController@show)
+            response: (json) [success(bool), message(varchar(255)), (IF SUCCESS === TRUE) -> data[id(int), name(varchar(50))]]

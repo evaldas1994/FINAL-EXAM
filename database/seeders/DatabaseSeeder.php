@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Region;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,8 +19,10 @@ class DatabaseSeeder extends Seeder
         User::factory(1)->create([
             'name' => 'Evaldas',
             'surname' => 'Tuleikis',
-            'password' => '00555',
+            'password' => Hash::make('00555'),
             'email' => 'Evaldas.tuleikis@gmail.com'
         ]);
+
+        Region::factory(10)->create();
     }
 }

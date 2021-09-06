@@ -2,9 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Models\Region;
 use Tests\TestCase;
-use App\Models\User;
+use App\Models\Region;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 

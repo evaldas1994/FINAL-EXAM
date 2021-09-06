@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Region;
 use App\Models\User;
+use App\Models\Region;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 

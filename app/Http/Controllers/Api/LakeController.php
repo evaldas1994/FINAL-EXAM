@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Api\LakeRequest;
+use Exception;
+use Throwable;
 use App\Models\Lake;
+use Illuminate\Http\Request;
 use App\Services\LakeService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Throwable;
+use App\Http\Requests\Api\LakeRequest;
+
+use function GuzzleHttp\Promise\exception_for;
 
 class LakeController extends Controller
 {
@@ -45,6 +48,8 @@ class LakeController extends Controller
      */
     public function store(LakeRequest $request): JsonResponse
     {
+
+        // dd($exception->getMessage());
         try {
             $lake = Lake::create([
                 'name' => $request['name'],

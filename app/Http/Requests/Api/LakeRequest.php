@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
 
 class LakeRequest extends FormRequest
 {
@@ -19,9 +20,9 @@ class LakeRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     *
      */
-    public function rules(): array
+    public function rules()
     {
         return [
             'name' => 'required|unique:lakes,name|min:2|max:50',

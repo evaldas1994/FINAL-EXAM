@@ -49,7 +49,6 @@ class LakeController extends Controller
     public function store(LakeRequest $request): JsonResponse
     {
 
-        // dd($exception->getMessage());
         try {
             $lake = Lake::create([
                 'name' => $request['name'],

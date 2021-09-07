@@ -17,4 +17,9 @@ class Region extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function lakes()
+    {
+        return $this->hasMany(Lake::class);
+    }
 }

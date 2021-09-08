@@ -62,3 +62,21 @@ API Specification
 
         -GET api/region/{id} (api/RegionController@show)
             response: (json) [success(bool), message(varchar(255)), (IF SUCCESS === TRUE) -> data[id(int), name(varchar(50))]]
+
+    LakeController
+        -GET api/lake (api/LakeController@index)
+            response: (json) [success(bool), message(varchar(255)), (IF SUCCESS === TRUE) -> data(array of regions objects)]
+
+        -GET api/lake/{id} (api/LakeController@show)
+            response: (json) [success(bool), message(varchar(255)), (IF SUCCESS === TRUE) -> data[id(int), name(varchar(50)), region_id(int)]]
+
+        -POST api/lake (api/LakeController@store)
+            body: (json) [name(varchar(50)), region_id(int)]
+            response: (json) [success(bool), message(varchar(255)), (IF SUCCESS === TRUE) -> data[id(int), name(varchar(50)), region_id(int)]]
+
+        -PATCH api/lake/{id} (api/LakeController@update)
+            body: (json) [name(varchar(50)), region_id(int)]
+            response: (json) [success(bool), message(varchar(255)), (IF SUCCESS === TRUE) -> data[id(int), name(varchar(50)), region_id(int)]]
+
+        -DELETE api/lake/{id} (api/LakeController@delete)
+            response: (json) [success(bool), message(varchar(255))]

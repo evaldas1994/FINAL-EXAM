@@ -113,7 +113,7 @@ class LakeController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'message' => 'lake created successfully',
+                    'message' => 'lake updated successfully',
                     'data' => $lake
                 ]);
 
@@ -127,7 +127,7 @@ class LakeController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'no lakes found'
-            ]);
+            ], 422);
         }
     }
 
@@ -148,12 +148,12 @@ class LakeController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'user deleted successfully'
+                'message' => 'lake deleted successfully'
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'user not found'
+                'message' => 'lake not found'
             ]);
         }
     }

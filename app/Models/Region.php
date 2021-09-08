@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -18,7 +19,7 @@ class Region extends Model
         'name'
     ];
 
-    public function lakes()
+    public function lakes(): HasMany
     {
         return $this->hasMany(Lake::class);
     }

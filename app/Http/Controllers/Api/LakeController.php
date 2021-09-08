@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use Exception;
 use Throwable;
 use App\Models\Lake;
 use Illuminate\Http\Request;
@@ -10,8 +9,6 @@ use App\Services\LakeService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\LakeRequest;
-
-use function GuzzleHttp\Promise\exception_for;
 
 class LakeController extends Controller
 {

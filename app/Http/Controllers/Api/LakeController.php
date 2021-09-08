@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use Throwable;
 use App\Models\Lake;
-use Illuminate\Http\Request;
 use App\Services\LakeService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;

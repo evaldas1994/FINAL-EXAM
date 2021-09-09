@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Throwable;
 use Carbon\Carbon;
 use App\Models\Ticket;
@@ -52,10 +54,10 @@ class TicketController extends Controller
                 "name" => $request['name'],
                 "surname" => $request['surname'],
                 "email" => $request['email'],
-                "serial_number" => $request['serial_number'],
+                "serial_number" => $this->generateSerialNumber(),
                 "valid_from" => $request['valid_from'],
                 "valid_to" => $request['valid_to'],
-                "price" => $request['price'],
+                "price" => $this->generatePrice($request)['price'],
                 "rods" => $request['rods']
             ]);
 
@@ -78,7 +80,7 @@ class TicketController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function show(int $id):JsonResponse
+    public function show(int $id): JsonResponse
     {
         $ticket = Ticket::find($id);
 
@@ -135,13 +137,18 @@ class TicketController extends Controller
         }
     }
 
+    public function price(Request $request): JsonResponse
+    {
+        return response()->json($this->generatePrice($request));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
      * @return JsonResponse
      */
-    public function destroy(int $id):JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         $ticket = Ticket::find($id);
 
@@ -183,17 +190,17 @@ class TicketController extends Controller
 
     protected function getPart1($date): string
     {
-        return substr((string)$date->year, 2,2);
+        return substr((string)$date->year, 2, 2);
     }
 
     protected function getPart2($date): string
     {
-        return strlen((string)$date->month) == 1 ? '0'.(string)$date->month : (string)$date->month;
+        return strlen((string)$date->month) == 1 ? '0' . (string)$date->month : (string)$date->month;
     }
 
     protected function getPart3($date): string
     {
-        return strlen((string)$date->day) == 1 ? '0'.(string)$date->day : (string)$date->day;
+        return strlen((string)$date->day) == 1 ? '0' . (string)$date->day : (string)$date->day;
     }
 
     protected function getPart4($tickets): string
@@ -203,13 +210,39 @@ class TicketController extends Controller
         });
 
         if (count($arrayOfTickets) < 10) {
-            return '00'.(string)(count($arrayOfTickets) +1);
+            return '00' . (string)(count($arrayOfTickets) + 1);
         } else {
             if (count($arrayOfTickets) < 100) {
-                return '0'.(string)(count($arrayOfTickets) +1);
+                return '0' . (string)(count($arrayOfTickets) + 1);
             } else {
-                return (string)(count($arrayOfTickets) +1);
+                return (string)(count($arrayOfTickets) + 1);
             }
         }
+    }
+
+    protected function generatePrice($request): array
+    {
+        $from = new Carbon($request['valid_from']);
+        $to = new Carbon($request['valid_to']);
+        $lakes = $request['lakes'];
+        $rods = $request['rods'];
+
+        $days = $from->diffInDays($to);
+
+        $priceForLakes = $this->formatPrice(50 * count($lakes) / 100);
+        $priceForDays = $this->formatPrice(10 * $days / 100);
+        $priceForRods = $this->formatPrice(80 * $rods / 100);
+
+        return [
+            "lakes" => $priceForLakes,
+            "days" => $priceForDays,
+            "rods" => $priceForRods,
+            "price" => $this->formatPrice($priceForLakes + $priceForDays + $priceForRods)
+        ];
+    }
+
+    protected function formatPrice($price): float
+    {
+        return number_format($price, 2, '.', '');
     }
 }

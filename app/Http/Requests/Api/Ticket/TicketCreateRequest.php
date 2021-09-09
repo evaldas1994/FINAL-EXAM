@@ -28,11 +28,10 @@ class TicketCreateRequest extends FormRequest
             'name' => 'required|min:2|max:50',
             'surname' => 'required|min:2|max:50',
             'email' => 'required|email',
-            'serial_number' => 'required|unique:tickets,serial_number|max:9',
             'valid_from' => 'required|date|before:valid_to',
             'valid_to' => 'required|date|after:valid_from',
-            'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'rods' => 'required|numeric|min:1|max:10'
+            'rods' => 'required|numeric|min:1|max:10',
+            'lakes' => 'required|array'
         ];
     }
 }

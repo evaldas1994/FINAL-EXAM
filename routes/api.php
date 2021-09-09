@@ -26,3 +26,4 @@ Route::apiResource('/user', UserController::class)->except('store');
 Route::apiResource('/region', RegionController::class)->except(['store', 'update', 'destroy']);
 Route::apiResource('/lake', LakeController::class);
 Route::apiResource('/ticket', TicketController::class);
+Route::post('/ticket/price', [TicketController::class, 'price']);

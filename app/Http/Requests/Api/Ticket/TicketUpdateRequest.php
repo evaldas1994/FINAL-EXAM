@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Ticket;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class TicketRequest extends FormRequest
+class TicketUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +29,7 @@ class TicketRequest extends FormRequest
             'name' => 'required|min:2|max:50',
             'surname' => 'required|min:2|max:50',
             'email' => 'required|email',
-            'serial_number' => 'required|unique:tickets,serial_number|max:9',
+            'serial_number' => ['required', 'max:9', Rule::unique('tickets')->ignore($this->route()->parameter('ticket'))],
             'valid_from' => 'required|date|before:valid_to',
             'valid_to' => 'required|date|after:valid_from',
             'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',

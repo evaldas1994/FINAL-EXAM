@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Lake;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\Rule;
 
-class LakeRequest extends FormRequest
+class LakeUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,16 @@ class LakeRequest extends FormRequest
      *
      *
      */
-    public function rules()
+    public function rules(): array
     {
+
         return [
-            'name' => 'required|unique:lakes,name|min:2|max:50',
+            'name' => [
+                'required',
+                'min:2',
+                'max:50',
+                Rule::unique('lakes')->ignore($this->route()->parameter('lake'))
+            ],
             'region_id' => 'required|exists:regions,id'
         ];
     }

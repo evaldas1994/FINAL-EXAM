@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/registration', [RegistrationController::class, 'save']);
 Route::post('/login', [LoginController::class, 'login']);
 
-
 Route::apiResource('/user', UserController::class)->except('store');
 Route::apiResource('/region', RegionController::class)->except(['store', 'update', 'destroy']);
 Route::apiResource('/lake', LakeController::class);

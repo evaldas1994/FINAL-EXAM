@@ -7,7 +7,8 @@ use App\Models\Ticket;
 use App\Services\TicketService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\TicketRequest;
+use App\Http\Requests\Api\Ticket\TicketCreateRequest;
+use App\Http\Requests\Api\Ticket\TicketUpdateRequest;
 
 class TicketController extends Controller
 {
@@ -39,10 +40,10 @@ class TicketController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param TicketRequest $request
+     * @param TicketCreateRequest $request
      * @return JsonResponse
      */
-    public function store(TicketRequest $request): JsonResponse
+    public function store(TicketCreateRequest $request): JsonResponse
     {
         try {
             $ticket = Ticket::create([
@@ -99,11 +100,11 @@ class TicketController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param TicketRequest $request
+     * @param TicketUpdateRequest $request
      * @param int $id
      * @return JsonResponse
      */
-    public function update(TicketRequest $request, int $id): JsonResponse
+    public function update(TicketUpdateRequest $request, int $id): JsonResponse
     {
         $ticket = Ticket::find($id);
 

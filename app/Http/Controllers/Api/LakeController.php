@@ -7,7 +7,8 @@ use App\Models\Lake;
 use App\Services\LakeService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\LakeRequest;
+use App\Http\Requests\Api\Lake\LakeUpdateRequest;
+use App\Http\Requests\Api\Lake\LakeCreateRequest;
 
 class LakeController extends Controller
 {
@@ -39,10 +40,10 @@ class LakeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param LakeRequest $request
+     * @param LakeCreateRequest $request
      * @return JsonResponse
      */
-    public function store(LakeRequest $request): JsonResponse
+    public function store(LakeCreateRequest $request): JsonResponse
     {
 
         try {
@@ -93,11 +94,11 @@ class LakeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param LakeRequest $request
+     * @param LakeUpdateRequest $request
      * @param int $id
      * @return JsonResponse
      */
-    public function update(LakeRequest $request, int $id): JsonResponse
+    public function update(LakeUpdateRequest $request, int $id): JsonResponse
     {
         $lake = Lake::find($id);
 

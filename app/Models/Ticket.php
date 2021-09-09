@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static create(array $array)
  * @method static find(int $id)
  * @method static first()
+ * @method static whereDate(string $string, string $string1, \Carbon\Carbon $startOfDay)
+ * @method static select(string $string)
  */
 class Ticket extends Model
 {

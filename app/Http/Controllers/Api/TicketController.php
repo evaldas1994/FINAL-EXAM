@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Throwable;
+use Carbon\Carbon;
 use App\Models\Ticket;
 use App\Services\TicketService;
 use Illuminate\Http\JsonResponse;
@@ -158,6 +159,57 @@ class TicketController extends Controller
                 'success' => false,
                 'message' => 'ticket not found'
             ]);
+        }
+    }
+
+    protected function generateSerialNumber(): int
+    {
+        $carbon = new Carbon();
+        $date = $carbon->now();
+
+        $tickets = Ticket::select('serial_number')
+            ->whereDate('created_at', '=', $date->startOfDay())
+            ->get();
+
+        $part1 = $this->getPart1($date);
+        $part2 = $this->getPart2($date);
+        $part3 = $this->getPart3($date);
+        $part4 = $this->getPart4($tickets);
+
+        $newSerialNumber = $part1 . $part2 . $part3 . $part4;
+
+        return (integer)$newSerialNumber;
+    }
+
+    protected function getPart1($date): string
+    {
+        return substr((string)$date->year, 2,2);
+    }
+
+    protected function getPart2($date): string
+    {
+        return strlen((string)$date->month) == 1 ? '0'.(string)$date->month : (string)$date->month;
+    }
+
+    protected function getPart3($date): string
+    {
+        return strlen((string)$date->day) == 1 ? '0'.(string)$date->day : (string)$date->day;
+    }
+
+    protected function getPart4($tickets): string
+    {
+        $arrayOfTickets = $tickets->map(function ($item, $key) {
+            return $item['serial_number'];
+        });
+
+        if (count($arrayOfTickets) < 10) {
+            return '00'.(string)(count($arrayOfTickets) +1);
+        } else {
+            if (count($arrayOfTickets) < 100) {
+                return '0'.(string)(count($arrayOfTickets) +1);
+            } else {
+                return (string)(count($arrayOfTickets) +1);
+            }
         }
     }
 }

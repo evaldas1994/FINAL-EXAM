@@ -80,3 +80,15 @@ API Specification
 
         -DELETE api/lake/{id} (api/LakeController@delete)
             response: (json) [success(bool), message(varchar(255))]
+
+
+Relations
+    User->tickets :HasMany
+
+    Region->lakes :HasMany
+
+    Lake->region :BelongsTo
+    Lake->tickets :BelongsToMany
+
+    Ticket->user :BelongsTo
+    Ticket->lakes :BelongsToMany

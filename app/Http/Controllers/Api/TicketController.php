@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Throwable;
 use Carbon\Carbon;
 use App\Models\Ticket;
+use Illuminate\Http\Request;
 use App\Services\TicketService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;

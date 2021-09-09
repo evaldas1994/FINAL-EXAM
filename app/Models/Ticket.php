@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @method static create(array $array)
  * @method static find(int $id)
+ * @method static first()
  */
 class Ticket extends Model
 {
@@ -26,8 +28,23 @@ class Ticket extends Model
         'rods'
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function lakes(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Lake::class,
+            'tickets_lakes',
+            'ticket_id',
+            'lake_id');
     }
 }

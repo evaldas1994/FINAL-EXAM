@@ -19,6 +19,9 @@ class Region extends Model
         'name'
     ];
 
+    /**
+     * @return HasMany
+     */
     public function lakes(): HasMany
     {
         return $this->hasMany(Lake::class);

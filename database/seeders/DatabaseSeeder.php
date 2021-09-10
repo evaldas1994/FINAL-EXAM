@@ -6,7 +6,9 @@ use App\Models\Lake;
 use App\Models\User;
 use App\Models\Region;
 use App\Models\Ticket;
+use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -18,12 +20,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(1)->create([
-            'name' => 'Evaldas',
-            'surname' => 'Tuleikis',
-            'password' => Hash::make('00555'),
-            'email' => 'Evaldas.tuleikis@gmail.com'
-        ]);
+//        User::factory(1)->create([
+//            'name' => 'Evaldas',
+//            'surname' => 'Tuleikis',
+//            'password' => Hash::make('00555'),
+//            'email' => 'Evaldas.tuleikis@gmail.com'
+//        ]);
         User::factory(9)->create();
 
         Region::factory(10)->create();

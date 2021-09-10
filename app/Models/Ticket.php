@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static first()
  * @method static whereDate(string $string, string $string1, \Carbon\Carbon $startOfDay)
  * @method static select(string $string)
+ * @method static firstOrFail()
+ * @method static findOrFail()
  */
 class Ticket extends Model
 {

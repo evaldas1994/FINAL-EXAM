@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\Authentication\LoginController;
-use App\Http\Controllers\Api\Authentication\RegistrationController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LakeController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RegionController;
 use App\Http\Controllers\Api\TicketController;
-use App\Http\Controllers\Api\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Authentication\LoginController;
+use App\Http\Controllers\Api\Authentication\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +27,4 @@ Route::apiResource('/region', RegionController::class)->except(['store', 'update
 Route::apiResource('/lake', LakeController::class);
 Route::apiResource('/ticket', TicketController::class);
 Route::post('/ticket/price', [TicketController::class, 'price']);
+

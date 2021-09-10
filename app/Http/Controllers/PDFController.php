@@ -13,16 +13,17 @@ class PDFController extends Controller
         $ticket = Ticket::findOrFail($id);
         $lakes = $ticket->lakes;
 
-        return view('index', compact('ticket', 'lakes'));
+        return view('ticket', compact('ticket', 'lakes'));
     }
 
     public function createPDF($id)
     {
-        $ticket = Ticket::firstOrFail($id);
+        $ticket = Ticket::FindOrFail($id);
+
         $lakes = $ticket->lakes;
 
-        view()->share('index', compact('ticket', 'lakes'));
-        $pdf = PDF::loadView('index', compact('ticket', 'lakes'));
+        view()->share('pdf.ticket', compact('ticket', 'lakes'));
+        $pdf = PDF::loadView('pdf.ticket', compact('ticket', 'lakes'));
 
         return $pdf->download('pdf_file.pdf');
     }

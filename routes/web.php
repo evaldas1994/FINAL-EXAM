@@ -20,5 +20,4 @@ Route::get('/', function () {
 });
 
 Route::get('/ticket/{id}', [PDFController::class, 'generateTicketView']);
-
 Route::get('/ticket/{id}/pdf', [PDFController::class, 'createPDF']);

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ticket;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use QrCode;
+use App\Models\Ticket;
+use Illuminate\Support\Facades\Storage;
+
 class QrCodeController extends Controller
 {
     public function generateQrCode($id)
@@ -41,13 +41,12 @@ class QrCodeController extends Controller
         return $result;
     }
 
-    public function getQrImage($ticket)
+    public function getQrImage($ticket): void
     {
         $image = \QrCode::format('png')
-//            ->merge('resources/views/qrcode.blade.php',0.1, true)
             ->size(1200)->errorCorrection('H')
             ->generate($this->generateString($ticket));
         $output_file = '/img/qr-code/'.$ticket->serial_number.'.png';
-        Storage::disk('public')->put($output_file, $image); //storage/app/public/img/qr-code/img-1557309130.png
+        Storage::disk('public')->put($output_file, $image);
     }
 }

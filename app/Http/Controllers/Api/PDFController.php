@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use PDF;
 use App\Models\Ticket;
-use Illuminate\View\View;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\QrCodeController;
 
 class PDFController extends Controller
 {
@@ -14,6 +14,9 @@ class PDFController extends Controller
         $ticket = Ticket::FindOrFail($id);
 
         $lakes = $ticket->lakes;
+
+        $qrController = new QrCodeController();
+        $qrController->getQrImage($ticket);
 
         view()->share('pdf.ticket', compact('ticket', 'lakes'));
         $pdf = PDF::loadView('pdf.ticket', compact('ticket', 'lakes'));

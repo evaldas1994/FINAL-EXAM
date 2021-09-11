@@ -29,7 +29,5 @@ Route::apiResource('/lake', LakeController::class);
 Route::apiResource('/ticket', TicketController::class);
 Route::post('/ticket/price', [TicketController::class, 'price']);
 
-
-Route::get('/ticket/{id}', [PDFController::class, 'generateTicketView']);
-Route::get('/ticket/{id}/pdf', [PDFController::class, 'createPDF']);
+Route::get('/ticket/{id}/pdf', [PDFController::class, 'createPDF']); //
 

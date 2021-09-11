@@ -1,9 +1,6 @@
 <?php
 
-use App\Http\Controllers\QrCodeController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PDFController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +16,3 @@ use App\Http\Controllers\PDFController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/ticket/{id}', [PDFController::class, 'generateTicketView']);
-Route::get('/ticket/{id}/pdf', [PDFController::class, 'createPDF']);
-Route::get('/ticket/{id}/qr', [QrCodeController::class, 'generateQrCode']);

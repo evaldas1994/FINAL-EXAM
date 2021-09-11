@@ -115,21 +115,6 @@
                 </table>
             </td>
             <td>
-{{--                <div class="qr-code">--}}
-{{--                    {!! QrCode::size(300)->generate('try it it ti ti tit ti tit it ti tit it it t i') !!}--}}
-{{--                </div>--}}
-
-{{--                <div class="qr-code">--}}
-{{--                    {!! QrCode::size(300)->generate($qr) !!}--}}
-{{--                    <a class="" href="{{ URL::to('/ticket/'.$ticket->id.'/pdf') }}">Export to PDF</a>--}}
-{{--                </div>--}}
-
-{{--                <div class="qr-code">--}}
-{{--                    <img src="https://dummyimage.com/300x300/ccc" alt="1">--}}
-{{--                </div>--}}
-{{--                <div class="qr-code">--}}
-{{--                    <img src="{{ asset('storage/img/qr-code/947081712.png') }}" alt="4">--}}
-{{--                </div>--}}
                 <div class="qr-code">
                     <img src="{{ public_path('storage/img/qr-code/'.$ticket->serial_number.'.png') }}" alt="5">
                 </div>

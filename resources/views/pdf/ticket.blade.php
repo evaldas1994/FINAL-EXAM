@@ -23,12 +23,15 @@
         .qr-code {
             width: 300px;
             height: 300px;
-            background: #4a5568;
             margin-left: auto;
             margin-bottom: auto;
         }
         p {
             margin: 5px;
+        }
+        img {
+            width: 300px;
+            height: 300px;
         }
     </style>
 </head>
@@ -105,15 +108,30 @@
 
                         <td class="text-left">
                             @for ($i = 0; $i < count($lakes); $i++)
-                                <p>{{ $lakes[0]->name }} ({{ $lakes[0]->region->name }})</p>
+                                <p>{{ $lakes[$i]->name }} ({{ $lakes[$i]->region->name }})</p>
                             @endfor
                         </td>
                     </tr>
                 </table>
             </td>
             <td>
+{{--                <div class="qr-code">--}}
+{{--                    {!! QrCode::size(300)->generate('try it it ti ti tit ti tit it ti tit it it t i') !!}--}}
+{{--                </div>--}}
+
+{{--                <div class="qr-code">--}}
+{{--                    {!! QrCode::size(300)->generate($qr) !!}--}}
+{{--                    <a class="" href="{{ URL::to('/ticket/'.$ticket->id.'/pdf') }}">Export to PDF</a>--}}
+{{--                </div>--}}
+
+{{--                <div class="qr-code">--}}
+{{--                    <img src="https://dummyimage.com/300x300/ccc" alt="1">--}}
+{{--                </div>--}}
+{{--                <div class="qr-code">--}}
+{{--                    <img src="{{ asset('storage/img/qr-code/947081712.png') }}" alt="4">--}}
+{{--                </div>--}}
                 <div class="qr-code">
-                    <a class="" href="{{ URL::to('/ticket/'.$ticket->id.'/pdf') }}">Export to PDF</a>
+                    <img src="{{ public_path('storage/img/qr-code/'.$ticket->serial_number.'.png') }}" alt="5">
                 </div>
             </td>
         </tr>

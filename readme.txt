@@ -84,6 +84,24 @@ API Specification
         -DELETE api/lake/{id} (api/LakeController@delete)
             response: (json) [success(bool), message(varchar(255))]
 
+    TicketController
+            -GET api/ticket (api/TicketController@index)
+                response: (json) [success(bool), message(varchar(255)), (IF SUCCESS === TRUE) -> data(array of tickets objects)]
+
+            -GET api/ticket/{id} (api/TicketController@show)
+                response: (json) [success(bool), message(varchar(255)), (IF SUCCESS === TRUE) -> data[id(int), name(varchar(50)), userName(varchar(50)), email(varchar), serial_number(int(9)), valid_from(timestamp), valid_to(timestamp), price(double), rods(int(10), created_at(timestamp), updated_at(timestamp)) ]]
+
+            -POST api/ticket (api/TicketController@store)
+                body: (json) [name(varchar(50)), surname(varchar(50)), email(varchar(50), valid_from(timestamp), valid_to(timestamp), rods(int(10)), lakes(Objects of Lake model))]
+                response: (json) [success(bool), message(varchar(255)), (IF SUCCESS === TRUE) -> data[id(int), name(varchar(50)), userName(varchar(50)), email(varchar), serial_number(int(9)), valid_from(timestamp), valid_to(timestamp), price(double), rods(int(10), created_at(timestamp), updated_at(timestamp)) ]]
+
+            -PATCH api/ticket/{id} (api/TicketController@update)
+                body: (json) [name(varchar(50)), surname(varchar(50)), email(varchar(50), valid_from(timestamp), valid_to(timestamp), rods(int(10)), lakes(Objects of Lake model))]
+                response: (json) [success(bool), message(varchar(255)), (IF SUCCESS === TRUE) -> data[id(int), name(varchar(50)), userName(varchar(50)), email(varchar), serial_number(int(9)), valid_from(timestamp), valid_to(timestamp), price(double), rods(int(10), created_at(timestamp), updated_at(timestamp)) ]]
+
+            -DELETE api/ticket/{id} (api/TicketController@delete)
+                response: (json) [success(bool), message(varchar(255))]
+
 
 Relations
     User->tickets :HasMany

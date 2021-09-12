@@ -19,7 +19,7 @@ class CreateTicketsTable extends Migration
             $table->text('name');
             $table->text('surname');
             $table->text('email');
-            $table->integer('serial_number');
+            $table->integer('serial_number')->unique();;
             $table->timestamp('valid_from');
             $table->timestamp('valid_to');
             $table->double('price', 8, 2);

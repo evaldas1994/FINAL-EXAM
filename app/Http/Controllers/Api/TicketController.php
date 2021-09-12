@@ -62,14 +62,14 @@ class TicketController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'lake created successfully',
+                'message' => 'ticket created successfully',
                 'data' => $ticket
             ]);
         } catch (Throwable $exception) {
             return response()->json([
                 'success' => false,
                 'message' => $exception->getMessage()
-            ]);
+            ],422);
         }
     }
 
@@ -95,7 +95,7 @@ class TicketController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'ticket not found'
-            ]);
+            ], 404);
         }
     }
 
@@ -131,8 +131,8 @@ class TicketController extends Controller
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'no ticket found'
-            ], 422);
+                'message' => 'ticket not found'
+            ], 404);
         }
     }
 
@@ -164,11 +164,11 @@ class TicketController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'ticket not found'
-            ]);
+            ], 404);
         }
     }
 
-    protected function generateSerialNumber(): int
+    public function generateSerialNumber(): int
     {
         $carbon = new Carbon();
         $date = $carbon->now();
@@ -208,6 +208,8 @@ class TicketController extends Controller
             return $item['serial_number'];
         });
 
+
+
         if (count($arrayOfTickets) < 10) {
             return '00' . (string)(count($arrayOfTickets) + 1);
         } else {
@@ -219,7 +221,7 @@ class TicketController extends Controller
         }
     }
 
-    protected function generatePrice($request): array
+    public function generatePrice($request): array
     {
         $from = new Carbon($request['valid_from']);
         $to = new Carbon($request['valid_to']);

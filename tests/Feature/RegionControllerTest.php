@@ -60,7 +60,7 @@ class RegionControllerTest extends TestCase
         $response = $this->getJson('/api/region/1');
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(404)
             ->assertJson([
                 "success" => false,
                 "message" => "region not found"

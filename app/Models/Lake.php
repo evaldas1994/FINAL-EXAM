@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * @method static create(array $array)
  * @method static find(int $id)
+ * @method static first()
+ * @method static firstOrFail()
  */
 class Lake extends Model
 {

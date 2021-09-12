@@ -50,7 +50,7 @@ class RegionController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'region not found'
-            ]);
+            ], 404);
         }
     }
 }

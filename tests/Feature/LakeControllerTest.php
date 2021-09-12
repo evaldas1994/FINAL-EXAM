@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
+use Tests\TestCase;
 use App\Models\Lake;
 use App\Models\Region;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
 class LakeControllerTest extends TestCase
 {
@@ -22,8 +22,8 @@ class LakeControllerTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJson([
-                "success" => true,
-                "message" => "lakes get successfully"
+                'success' => true,
+                'message' => 'lakes get successfully'
             ]);
         return 0;
     }
@@ -35,8 +35,8 @@ class LakeControllerTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJson([
-                "success" => false,
-                "message" => "no lakes"
+                'success' => false,
+                'message' => 'no lakes'
             ]);
         return 0;
     }
@@ -46,15 +46,15 @@ class LakeControllerTest extends TestCase
         Region::factory(1)->create();
 
         $response = $this->postJson('/api/lake', [
-            "name" => "lake1",
-            "region_id" => 1
+            'name' => 'lake1',
+            'region_id' => 1
         ]);
 
         $response
             ->assertStatus(200)
             ->assertJson([
-                "success" => true,
-                "message" => "lake created successfully"
+                'success' => true,
+                'message' => 'lake created successfully'
             ]);
         return 0;
     }
@@ -62,8 +62,8 @@ class LakeControllerTest extends TestCase
     public function test_store_without_existing_region(): int
     {
         $response = $this->postJson('/api/lake', [
-            "name" => "lake1",
-            "region_id" => 1
+            'name' => 'lake1',
+            'region_id' => 1
         ]);
 
         $response
@@ -75,12 +75,12 @@ class LakeControllerTest extends TestCase
     {
         Region::factory(1)->create([]);
         Lake::factory(1)->create([
-            'name' => "lake1"
+            'name' => 'lake1'
         ]);
 
         $response = $this->postJson('/api/lake', [
-            "name" => "lake1",
-            "region_id" => 1
+            'name' => 'lake1',
+            'region_id' => 1
         ]);
 
         $response
@@ -93,7 +93,7 @@ class LakeControllerTest extends TestCase
         Region::factory(1)->create();
 
         $response = $this->postJson('/api/lake', [
-            "region_id" => 2
+            'region_id' => 2
         ]);
 
         $response
@@ -110,8 +110,8 @@ class LakeControllerTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJson([
-                "success" => true,
-                "message" => "lake found successfully"
+                'success' => true,
+                'message' => 'lake found successfully'
             ]);
         return 0;
     }
@@ -121,10 +121,10 @@ class LakeControllerTest extends TestCase
         $response = $this->getJson('/api/lake/1');
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(404)
             ->assertJson([
-                "success" => false,
-                "message" => "lake not found"
+                'success' => false,
+                'message' => 'lake not found'
             ]);
         return 0;
     }
@@ -135,15 +135,15 @@ class LakeControllerTest extends TestCase
         Lake::factory(1)->create();
 
         $response = $this->patchJson('/api/lake/1', [
-            "name" => "lake1",
-            "region_id" => 3
+            'name' => 'lake1',
+            'region_id' => 3
         ]);
 
         $response
             ->assertStatus(200)
             ->assertJson([
-                "success" => true,
-                "message" => "lake updated successfully"
+                'success' => true,
+                'message' => 'lake updated successfully'
             ]);
         return 0;
     }
@@ -153,8 +153,8 @@ class LakeControllerTest extends TestCase
         Region::factory(10)->create();
 
         $response = $this->patchJson('/api/lake/1', [
-            "name" => "lake1",
-            "region_id" => 3
+            'name' => 'lake1',
+            'region_id' => 3
         ]);
 
         $response
@@ -168,8 +168,8 @@ class LakeControllerTest extends TestCase
         Lake::factory(1)->create();
 
         $response = $this->patchJson('/api/lake/1', [
-            "name" => "lake1",
-            "region_id" => 30
+            'name' => 'lake1',
+            'region_id' => 30
         ]);
 
         $response
@@ -182,12 +182,12 @@ class LakeControllerTest extends TestCase
         Region::factory(10)->create();
         Lake::factory(1)->create();
         Lake::factory(1)->create([
-            "name" => "lake1"
+            'name' => 'lake1'
         ]);
 
         $response = $this->patchJson('/api/lake/1', [
-            "name" => "lake1",
-            "region_id" => 1
+            'name' => 'lake1',
+            'region_id' => 1
         ]);
 
         $response
@@ -205,8 +205,8 @@ class LakeControllerTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJson([
-                "success" => true,
-                "message" => "lake deleted successfully"
+                'success' => true,
+                'message' => 'lake deleted successfully'
             ]);
         return 0;
     }
@@ -216,10 +216,10 @@ class LakeControllerTest extends TestCase
         $response = $this->deleteJson('/api/lake/1');
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(404)
             ->assertJson([
-                "success" => false,
-                "message" => "lake not found"
+                'success' => false,
+                'message' => 'lake not found'
             ]);
         return 0;
     }

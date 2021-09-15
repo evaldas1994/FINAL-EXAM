@@ -60,6 +60,11 @@ class TicketController extends Controller
                 "rods" => $request['rods']
             ]);
 
+
+            for ($i = 0; $i < count($request['lakes']); $i++) {
+                $ticket->lakes()->attach($request['lakes'][$i]['id']);
+            }
+
             return response()->json([
                 'success' => true,
                 'message' => 'ticket created successfully',
@@ -231,7 +236,7 @@ class TicketController extends Controller
         $days = $from->diffInDays($to);
 
         $priceForLakes = $this->formatPrice(50 * count($lakes) / 100);
-        $priceForDays = $this->formatPrice(10 * $days / 100);
+        $priceForDays = $this->formatPrice(10 * ($days + 1) / 100);
         $priceForRods = $this->formatPrice(80 * $rods / 100);
 
         return [

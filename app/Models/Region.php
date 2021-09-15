@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @method static find(int $id)
+ * @method static orderBy(string $string)
  */
 class Region extends Model
 {
@@ -24,6 +25,6 @@ class Region extends Model
      */
     public function lakes(): HasMany
     {
-        return $this->hasMany(Lake::class);
+        return $this->hasMany(Lake::class)->orderBy('name');
     }
 }

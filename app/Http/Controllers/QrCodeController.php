@@ -31,6 +31,7 @@ class QrCodeController extends Controller
     {
         $lakes = $ticket->lakes;
 
+
         $result = '';
 
         for ($i=0; $i<count($lakes); $i++) {
@@ -38,14 +39,16 @@ class QrCodeController extends Controller
                     ';
         }
 
+
         return $result;
     }
 
     public function getQrImage($ticket): void
     {
-        $image = \QrCode::format('png')
+        $image = QrCode::format('png')
             ->size(1200)->errorCorrection('H')
-            ->generate($this->generateString($ticket));
+            ->generate(utf8_decode($this->generateString($ticket)));
+
         $output_file = '/img/qr-code/'.$ticket->serial_number.'.png';
         Storage::disk('public')->put($output_file, $image);
     }

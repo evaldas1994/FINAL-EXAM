@@ -4,13 +4,19 @@ namespace App\Services;
 
 class TicketService
 {
-    public function is_records_exists($lakes): bool
+    static function wordsToFirstLetterUpper($text)
     {
-        return count($lakes) > 0;
+        $words = explode(' ', $text);
+        
+        for ($i = 0; $i < count($words); $i++) {
+            $words[$i] = self::toFirstLetterUpper($words[$i]);
+        }
+
+        return implode(' ', $words);
     }
 
-    public function is_record_exists($lakes): bool
+    static function toFirstLetterUpper($text): string
     {
-        return $lakes !== null;
-    }
+        return strtoupper(substr($text, 0, 1)) . strtolower(substr($text, 1)); 
+    }  
 }

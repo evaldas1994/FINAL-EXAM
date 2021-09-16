@@ -14,6 +14,7 @@ class PDFController extends Controller
         $ticket = Ticket::FindOrFail($id);
 
         $lakes = $ticket->lakes;
+        //dd($lakes);
 
         $qrController = new QrCodeController();
         $qrController->getQrImage($ticket);

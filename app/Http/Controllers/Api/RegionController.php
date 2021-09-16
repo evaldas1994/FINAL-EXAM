@@ -15,7 +15,7 @@ class RegionController extends Controller
      */
     public function index(): JsonResponse
     {
-        $regions = Region::all();
+        $regions = Region::orderBy('name')->get();
         if (count($regions) > 0) {
             return response()->json([
                 'success' => true,
@@ -50,6 +50,25 @@ class RegionController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'region not found'
+            ], 404);
+        }
+    }
+
+    public function getLakesByRegionId(int $id): JsonResponse
+    {
+        $region = Region::find($id);
+        $lakes = $region->lakes;
+
+        if ($region !== null) {
+            return response()->json([
+                'success' => true,
+                'message' => 'lakes found successfully',
+                'data' => $lakes
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'lakes not found'
             ], 404);
         }
     }

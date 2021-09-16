@@ -1,4 +1,7 @@
 <?php
+//header('Access-Control-Allow-Origin:  *');
+//header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
+//header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Authorization');
 
 use App\Http\Controllers\Api\PDFController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +28,7 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::apiResource('/user', UserController::class)->except('store');
 Route::apiResource('/region', RegionController::class)->except(['store', 'update', 'destroy']);
+Route::get('/region/{id}/lakes', [RegionController::class, 'getLakesByRegionId']); //
 Route::apiResource('/lake', LakeController::class);
 Route::apiResource('/ticket', TicketController::class);
 Route::post('/ticket/price', [TicketController::class, 'price']);

@@ -12,57 +12,22 @@ use App\Http\Requests\Api\Lake\LakeCreateRequest;
 
 class LakeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return JsonResponse
-     */
     public function index(): JsonResponse
     {
-        $lakes = Lake::all();
-
-        $lakeService = new LakeService();
-
-        if ($lakeService->is_records_exists($lakes)) {
-            return response()->json([
-                'success' => true,
-                'message' => 'lakes get successfully',
-                'data' => $lakes
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'no lakes'
-            ]);
-        }
+        return response()
+            ->json(['data' => Lake::all()], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param LakeCreateRequest $request
-     * @return JsonResponse
-     */
     public function store(LakeCreateRequest $request): JsonResponse
     {
+        $lake = Lake::create([
+            'name' => LakeService::wordsToFirstLetterUpper($request->input('name')),
+            'region_id' => $request->input('region_id')
+        ]);
 
-        try {
-            $lake = Lake::create([
-                'name' => $request['name'],
-                'region_id' => $request['region_id']
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'lake created successfully',
-                'data' => $lake
-            ]);
-        } catch (Throwable $exception) {
-            return response()->json([
-                'success' => false,
-                'message' => $exception->getMessage()
-            ]);
-        }
+        return response()->json([
+            'data' => $lake
+        ]);  
     }
 
     /**

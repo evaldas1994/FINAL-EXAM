@@ -15,12 +15,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static select(string $string)
  * @method static firstOrFail()
  * @method static findOrFail()
+ * @property mixed $lakes
  */
 class Ticket extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'region_id',
         'name',
         'surname',

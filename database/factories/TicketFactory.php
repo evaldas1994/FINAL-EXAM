@@ -22,7 +22,6 @@ class TicketFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => rand(1, 10),
             'name' => $this->faker->name(),
             'surname' => $this->faker->name(),
             'email' => $this->faker->email(),

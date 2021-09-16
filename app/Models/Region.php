@@ -6,10 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-/**
- * @method static find(int $id)
- * @method static orderBy(string $string)
- */
 class Region extends Model
 {
     use HasFactory;

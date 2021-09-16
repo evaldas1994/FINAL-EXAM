@@ -3,28 +3,14 @@
 namespace Database\Seeders;
 
 use App\Models\Lake;
-use App\Models\User;
 use App\Models\Region;
 use App\Models\Ticket;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
     public function run()
     {
-//        User::factory(1)->create([
-//            'name' => 'Evaldas',
-//            'surname' => 'Tuleikis',
-//            'password' => Hash::make('00555'),
-//            'email' => 'Evaldas.tuleikis@gmail.com'
-//        ]);
-        User::factory(9)->create();
-
         $regions = [
             'Klaipėda',
             'Telšiai',
@@ -37,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'Vilnius',
             'Alytus'
         ];
-        for ($i=0; $i < count($regions); $i++) {
+        for ($i = 0; $i < count($regions); $i++) {
             Region::factory()->create(['name' => $regions[$i]]);
         }
 
@@ -150,10 +136,10 @@ class DatabaseSeeder extends Seeder
 
 
         ];
-        for ($i=0; $i < count($lakes); $i++) {
+        for ($i = 0; $i < count($lakes); $i++) {
             Lake::factory()->create($lakes[$i]);
         }
-//        Lake::factory(20)->create();
+
         Ticket::factory(40)->create();
     }
 }

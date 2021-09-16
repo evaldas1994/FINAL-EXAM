@@ -2,175 +2,66 @@
 
 namespace App\Http\Controllers\Api;
 
-use Throwable;
 use Carbon\Carbon;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Services\TicketService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Ticket\TicketPriceRequest;
 use App\Http\Requests\Api\Ticket\TicketCreateRequest;
-use App\Http\Requests\Api\Ticket\TicketUpdateRequest;
 
 class TicketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return JsonResponse
-     */
     public function index(): JsonResponse
     {
         $tickets = Ticket::all();
 
         $ticketService = new TicketService();
 
-        if ($ticketService->is_records_exists($tickets)) {
-            return response()->json([
-                'success' => true,
-                'message' => 'tickets get successfully',
-                'data' => $tickets
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'no tickets'
-            ]);
-        }
+        return response()
+            ->json(['data' => $tickets]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param TicketCreateRequest $request
-     * @return JsonResponse
-     */
     public function store(TicketCreateRequest $request): JsonResponse
     {
-        try {
-            $ticket = Ticket::create([
-                "user_id" => 1,
-                "name" => $request['name'],
-                "surname" => $request['surname'],
-                "email" => $request['email'],
-                "serial_number" => $this->generateSerialNumber(),
-                "valid_from" => $request['valid_from'],
-                "valid_to" => $request['valid_to'],
-                "price" => $this->generatePrice($request)['price'],
-                "rods" => $request['rods']
-            ]);
+        $ticket = Ticket::create([
+            "name" => TicketService::wordsToFirstLetterUpper($request->input('name')),
+            "surname" =>  TicketService::wordsToFirstLetterUpper($request->input('surname')),
+            "email" => TicketService::wordsToFirstLetterUpper($request->input('email')),
+            "serial_number" => $this->generateSerialNumber(),
+            "valid_from" => $request->input('valid_from'),
+            "valid_to" => $request->input('valid_to'),
+            "price" => $this->generatePrice($request)['price'],
+            "rods" => $request->input('rods')
+        ]);
 
-
-            for ($i = 0; $i < count($request['lakes']); $i++) {
-                $ticket->lakes()->attach($request['lakes'][$i]['id']);
-            }
-
-            return response()->json([
-                'success' => true,
-                'message' => 'ticket created successfully',
-                'data' => $ticket
-            ]);
-        } catch (Throwable $exception) {
-            return response()->json([
-                'success' => false,
-                'message' => $exception->getMessage()
-            ],422);
+        for ($i = 0; $i < count($request->input('lakes')); $i++) {
+            $ticket->lakes()->attach($request->input('lakes')[$i]['id']);
         }
+
+        return response()
+            ->json(['data' => $ticket], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function show(int $id): JsonResponse
+    public function show(Ticket $ticket): JsonResponse
     {
-        $ticket = Ticket::find($id);
-
-        $ticketService = new TicketService();
-
-        if ($ticketService->is_record_exists($ticket)) {
-            return response()->json([
-                'success' => true,
-                'message' => 'ticket found successfully',
-                'data' => $ticket
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'ticket not found'
-            ], 404);
-        }
+        return response()
+            ->json(['data' => $ticket], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param TicketUpdateRequest $request
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function update(TicketUpdateRequest $request, int $id): JsonResponse
+    public function destroy(Ticket $ticket): Response
     {
-        $ticket = Ticket::find($id);
+        $ticket->delete();
 
-        $ticketService = new TicketService();
-
-        if ($ticketService->is_record_exists($ticket)) {
-            try {
-                $ticket->update($request->all());
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'ticket updated successfully',
-                    'data' => $ticket
-                ]);
-
-            } catch (Throwable $exception) {
-                return response()->json([
-                    'success' => false,
-                    'message' => $exception->getMessage()
-                ]);
-            }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'ticket not found'
-            ], 404);
-        }
+        return response(null, 204);
     }
 
-    public function price(Request $request): JsonResponse
+    public function price(TicketPriceRequest $request): JsonResponse
     {
-        return response()->json($this->generatePrice($request));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function destroy(int $id): JsonResponse
-    {
-        $ticket = Ticket::find($id);
-
-        $userService = new TicketService();
-
-        if ($userService->is_record_exists($ticket)) {
-            $ticket->delete();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'ticket deleted successfully'
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'ticket not found'
-            ], 404);
-        }
+        return response()
+            ->json(['data' => $this->generatePrice($request)], 200);
     }
 
     public function generateSerialNumber(): int
@@ -187,9 +78,7 @@ class TicketController extends Controller
         $part3 = $this->getPart3($date);
         $part4 = $this->getPart4($tickets);
 
-        $newSerialNumber = $part1 . $part2 . $part3 . $part4;
-
-        return (integer)$newSerialNumber;
+        return (int)($part1 . $part2 . $part3 . $part4);
     }
 
     protected function getPart1($date): string
@@ -209,11 +98,9 @@ class TicketController extends Controller
 
     protected function getPart4($tickets): string
     {
-        $arrayOfTickets = $tickets->map(function ($item, $key) {
+        $arrayOfTickets = $tickets->map(function ($item) {
             return $item['serial_number'];
         });
-
-
 
         if (count($arrayOfTickets) < 10) {
             return '00' . (string)(count($arrayOfTickets) + 1);
@@ -226,12 +113,12 @@ class TicketController extends Controller
         }
     }
 
-    public function generatePrice($request): array
+    protected function generatePrice(Request $request): array
     {
-        $from = new Carbon($request['valid_from']);
-        $to = new Carbon($request['valid_to']);
-        $lakes = $request['lakes'];
-        $rods = $request['rods'];
+        $from = new Carbon($request->input('valid_from'));
+        $to = new Carbon($request->input('valid_to'));
+        $lakes = $request->input('lakes');
+        $rods = $request->input('rods');
 
         $days = $from->diffInDays($to);
 
@@ -249,6 +136,6 @@ class TicketController extends Controller
 
     protected function formatPrice($price): float
     {
-        return number_format($price, 2, '.', '');
+        return number_format($price, 2, '.', ' ');
     }
 }

@@ -7,22 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-/**
- * @method static create(array $array)
- * @method static find(int $id)
- * @method static first()
- * @method static whereDate(string $string, string $string1, \Carbon\Carbon $startOfDay)
- * @method static select(string $string)
- * @method static firstOrFail()
- * @method static findOrFail()
- * @property mixed $lakes
- */
 class Ticket extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'region_id',
         'name',
         'surname',
@@ -51,6 +40,7 @@ class Ticket extends Model
             Lake::class,
             'tickets_lakes',
             'ticket_id',
-            'lake_id');
+            'lake_id'
+        );
     }
 }

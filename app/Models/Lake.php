@@ -7,12 +7,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-/**
- * @method static create(array $array)
- * @method static find(int $id)
- * @method static first()
- * @method static firstOrFail()
- */
 class Lake extends Model
 {
     use HasFactory;

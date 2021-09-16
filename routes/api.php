@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\PDFController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\PDFController;
 use App\Http\Controllers\Api\LakeController;
 use App\Http\Controllers\Api\RegionController;
 use App\Http\Controllers\Api\TicketController;

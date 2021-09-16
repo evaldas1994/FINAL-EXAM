@@ -29,4 +29,23 @@ class RegionController extends Controller
         return response()
             ->json(['data' => $lakes], 200);
     }
+
+    public function getLakesByRegionId(int $id): JsonResponse
+    {
+        $region = Region::find($id);
+        $lakes = $region->lakes;
+
+        if ($region !== null) {
+            return response()->json([
+                'success' => true,
+                'message' => 'lakes found successfully',
+                'data' => $lakes
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'lakes not found'
+            ], 404);
+        }
+    }
 }

@@ -32,7 +32,7 @@ class LakeController extends Controller
     public function show(Lake $lake): JsonResponse
     {
         return response()
-            ->json(['data' => $lake]);
+            ->json(['data' => $lake], 200);
     }
 
     public function update(LakeUpdateRequest $request, Lake $lake): JsonResponse

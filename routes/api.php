@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\PDFController;
 use App\Http\Controllers\Api\LakeController;
 use App\Http\Controllers\Api\RegionController;
 use App\Http\Controllers\Api\TicketController;
@@ -24,4 +23,3 @@ Route::get('/region/{id}/lakes', [RegionController::class, 'getLakesByRegionId']
 
 Route::apiResource('/ticket', TicketController::class)->except('update');
 Route::post('/ticket/price', [TicketController::class, 'price']);
-Route::get('/ticket/{id}/pdf', [PDFController::class, 'createPDF']);
